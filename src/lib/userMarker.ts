@@ -1,6 +1,6 @@
 import type { LngLatLike } from 'maplibre-gl';
+import type { GeoPoint } from './types';
 
-export type GeoPoint = [number, number];
 
 export class UserMarker {
     center: LngLatLike;

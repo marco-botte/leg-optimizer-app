@@ -1,9 +1,15 @@
 <script lang="ts">
-	import Map from '$lib/components/Map.svelte';
-	import { UserMarker } from '$lib/userMarker';
-	import { mockTour } from '$lib/mockTour';
+	import { goto } from '$app/navigation';
 
-	const myMarker = new UserMarker(mockTour[0]);
+	const tourID = '51e7ec9a-c37b-479f-b6c0-7d3000251443';
 </script>
 
-<Map userMarker={myMarker} line={mockTour} zoom={15} />
+<div class="flex h-screen items-center justify-center">
+	<button
+		class="btn btn-xl btn-primary"
+		aria-label="load book"
+		onclick={() => goto(`/roadbook/${tourID}`)}
+	>
+		Load Tour
+	</button>
+</div>
