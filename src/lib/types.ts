@@ -9,6 +9,14 @@ export interface Waypoint {
 	cals_so_far: number;
 }
 
+export interface TourListResponse {
+	id: string;
+	name: string;
+	total_km: number;
+	total_elevation: number;
+}
+
+
 export interface TourResponse {
 	id: string;
 	name: string;
