@@ -1,10 +1,8 @@
-<script lang="ts">
+<script>
 	import './layout.css';
-	import favicon from '$lib/assets/favicon.svg';
-
 	let { children } = $props();
 </script>
 
-<div class="app-wrapper" style="width: 100%; height: 100%;">
+<main class="h-screen w-screen overflow-hidden">
 	{@render children()}
-</div>
+</main>
