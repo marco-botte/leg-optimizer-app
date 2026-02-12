@@ -5,5 +5,6 @@
 	let { children } = $props();
 </script>
 
-<svelte:head><link rel="icon" href={favicon} /></svelte:head>
-{@render children()}
+<div class="app-wrapper" style="width: 100%; height: 100%;">
+	{@render children()}
+</div>
