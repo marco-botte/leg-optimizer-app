@@ -4,11 +4,10 @@
 	import { PUBLIC_PROTOMAPS_KEY } from '$env/static/public';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 
-	let { zoom, theme, markerInstance } = $props();
+	let { zoom, userMarker, line } = $props();
 
 	let mapContainer: HTMLElement | undefined = $state();
 	let map: maplibregl.Map | null = null;
-	let mapMarker: maplibregl.Marker | null = null;
 
 	$effect(() => {
 		if (!mapContainer) return;
@@ -18,15 +17,42 @@
 
 		map = new maplibregl.Map({
 			container: mapContainer,
-			style: `https://api.protomaps.com/styles/v3/${theme}.json?key=${PUBLIC_PROTOMAPS_KEY}`,
-			center: markerInstance.center,
+			style: `https://api.protomaps.com/styles/v3/dark.json?key=${PUBLIC_PROTOMAPS_KEY}`,
+			center: userMarker.center,
 			zoom,
 			attributionControl: false
 		});
 
-		if (markerInstance) {
-			mapMarker = new maplibregl.Marker({ element: markerInstance.element })
-				.setLngLat(markerInstance.center)
+		map.on('load', () => {
+			// Add the Tour Line
+			map?.addSource('route', {
+				type: 'geojson',
+				data: {
+					type: 'Feature',
+					properties: {},
+					geometry: {
+						type: 'LineString',
+						coordinates: line
+					}
+				}
+			});
+
+			map?.addLayer({
+				id: 'route',
+				type: 'line',
+				source: 'route',
+				layout: { 'line-join': 'round', 'line-cap': 'round' },
+				paint: {
+					'line-color': '#3b82f6', // Tailwind blue-500
+					'line-width': 6,
+					'line-opacity': 0.8
+				}
+			});
+		});
+
+		if (userMarker) {
+			new maplibregl.Marker({ element: userMarker.element })
+				.setLngLat(userMarker.center)
 				.addTo(map);
 		}
 
@@ -34,10 +60,6 @@
 			map?.remove();
 			maplibregl.removeProtocol('pmtiles');
 		};
-	});
-
-	$effect(() => {
-		if (mapMarker) mapMarker.setLngLat(markerInstance.center);
 	});
 </script>
 
