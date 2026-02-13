@@ -6,48 +6,58 @@
 	const tours = $derived(data.tours ?? []);
 </script>
 
-<div class="flex min-h-screen items-center justify-center bg-base-200 p-4">
-	<ul class="list w-full max-w-2xl rounded-box border border-base-300 bg-base-100 shadow-xl">
-		<li class="p-4 pb-2 text-xs font-bold tracking-widest text-primary uppercase opacity-70">
-			Available Tours
-		</li>
+<div class="min-h-screen bg-base-200 p-4 pb-20">
+	<header class="mx-auto mb-6 max-w-md pt-4">
+		<h1 class="text-3xl font-extrabold text-base-content">Tours</h1>
+		<p class="text-sm font-medium text-base-content/60">Select a route to begin</p>
+	</header>
 
+	<div class="mx-auto flex max-w-md flex-col gap-4">
 		{#each tours as tour, i}
-			<li
-				class="list-row flex items-center gap-4 border-t border-base-200 p-4 transition-colors hover:bg-base-200/50"
-			>
-				<div class="w-8 text-xl font-black opacity-20">{i + 1}</div>
-
-				<div class="flex-1 truncate font-semibold text-base-content">
-					{tour.name.slice(0, 10)}{tour.name.length > 10 ? '...' : ''}
-				</div>
-
-				<div class="flex items-center gap-6 px-4 text-sm font-medium whitespace-nowrap">
-					<div class="flex w-20 items-center gap-1.5">
-						<span class="material-icons-outlined text-[18px] text-accent">east</span>
-						<span
-							>{Math.round(tour.total_km)}<span class="ml-0.5 text-[10px] opacity-50">KM</span
-							></span
-						>
+			<div class="card border border-base-300 bg-base-100 shadow-sm">
+				<div class="card-body p-5">
+					<div class="flex items-start justify-between gap-2">
+						<h2 class="card-title line-clamp-1 text-base-content">
+							{tour.name}
+						</h2>
+						<div class="badge badge-outline font-bold badge-primary">
+							#{i + 1}
+						</div>
 					</div>
 
-					<div class="flex w-20 items-center gap-1.5">
-						<span class="material-icons-outlined text-[18px] text-secondary">north</span>
-						<span
-							>{Math.round(tour.total_elevation)}<span class="ml-0.5 text-[10px] opacity-50">M</span
-							></span
+					<div class="stats mt-2 stats-horizontal border-none bg-base-200">
+						<div class="stat p-2 px-4">
+							<div class="stat-title text-[10px] font-bold uppercase">Distance</div>
+							<div class="stat-value flex items-center gap-1 text-sm">
+								{Math.round(tour.total_km)}
+								<span class="text-[10px] opacity-50">KM</span>
+							</div>
+						</div>
+
+						<div class="stat border-l border-base-300 p-2 px-4">
+							<div class="stat-title text-[10px] font-bold uppercase">Elev.</div>
+							<div class="stat-value flex items-center gap-1 text-sm">
+								{Math.round(tour.total_elevation)}
+								<span class="text-[10px] opacity-50">M</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="mt-4 card-actions">
+						<button
+							class="group btn btn-block shadow-md btn-primary"
+							onclick={() => goto(`/roadbook/${tour.id}`)}
 						>
+							Open Roadbook
+							<span
+								class="material-icons-outlined text-sm transition-transform group-hover:translate-x-1"
+							>
+								arrow_forward
+							</span>
+						</button>
 					</div>
 				</div>
-
-				<button
-					class="btn shadow-sm btn-sm btn-primary md:btn-md"
-					aria-label="load book"
-					onclick={() => goto(`/roadbook/${tour.id}`)}
-				>
-					Load
-				</button>
-			</li>
+			</div>
 		{/each}
-	</ul>
+	</div>
 </div>
