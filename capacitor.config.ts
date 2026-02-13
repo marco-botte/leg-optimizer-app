@@ -1,12 +1,16 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.example.app',
-  appName: 'toy-app',
+  appId: 'com.marco.leg-optimizer-v1', // Use the same unique ID you put in Xcode
+  appName: 'Leg Optimizer',
   webDir: 'build',
   server: {
-    url: 'http://localhost:5173', // Your SvelteKit dev server port
-    cleartext: true // Required to allow http instead of https
+    // We leave this empty for production so it loads the local "build" folder
+    androidScheme: 'https',
+    iosScheme: 'https'
+  },
+ios: {
+    webContentsDebuggingEnabled: true 
   }
 };
 
