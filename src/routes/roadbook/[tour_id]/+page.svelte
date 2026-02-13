@@ -12,7 +12,7 @@
 </script>
 
 {#if tour && userMarker}
-	<Map {userMarker} line={geoPoints} zoom={15} />
+	<Map {userMarker} line={geoPoints} zoom={8} />
 {:else}
 	<div class="flex h-screen items-center justify-center bg-slate-900 text-white">
 		<p>Loading tour data...</p>
