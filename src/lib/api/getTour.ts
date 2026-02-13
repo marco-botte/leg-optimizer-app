@@ -1,7 +1,9 @@
 import { error } from '@sveltejs/kit';
 import type { TourResponse, Waypoint } from '$lib/types';
+import { PUBLIC_API_IP, PUBLIC_API_PORT } from '$env/static/public';
 
-const API_BASE = 'http://192.168.2.229:8080'; 
+// Construct the base URL dynamically
+const API_BASE = `http://${PUBLIC_API_IP}:${PUBLIC_API_PORT}`;
 
 export async function getTour(id: string, fetchImpl: typeof fetch): Promise<TourResponse> {
     const res = await fetchImpl(`${API_BASE}/tours/${id}`);
